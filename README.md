@@ -2,4 +2,4 @@
 AI-powered mood planner that turns your emotions into action
 
 
-This readme contains in sample branch
+This readme contains in main branch

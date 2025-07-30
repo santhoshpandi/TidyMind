@@ -4,6 +4,9 @@
 
 @import "tailwindcss";
 
+/* * {
+  outline: 1px solid red;
+} */
 
 @theme {
   --font-sans: "Roboto", sans-serif;
@@ -12,6 +15,10 @@
 
 * {
   font-family: var(--font-mono);
+}
+
+button{
+  @apply cursor-pointer
 }
 
 @keyframes slideIn {

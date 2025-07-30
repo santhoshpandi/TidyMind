@@ -2,8 +2,6 @@
 AI-powered mood planner that turns your emotions into action
 
 
-This readme contains in sample branch
-
 Steps for installation:
 
 1. Download the repo from the branch 'sample'
@@ -26,3 +24,4 @@ Steps for installation:
     ```
 
 The website is available at http://localhost:5173
+

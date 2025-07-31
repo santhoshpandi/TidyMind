@@ -56,10 +56,10 @@ function App() {
   }, [currentSlide]);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden font-sans bg-gradient-to-br from-[#FFF4EF] to-[#FFEDE1]">
+    <div className="relative w-screen  overflow-hidden font-sans bg-gradient-to-br from-[#FFF4EF] to-[#FFEDE1]">
       <div
         ref={slidesWrapperRef}
-        className="flex w-[400vw] h-screen transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+        className="flex w-[400vw] transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
       >
         <div className="w-screen h-screen">
           <Home_1 active={currentSlide === 0} />
@@ -70,10 +70,14 @@ function App() {
         <div className="w-screen h-screen">
           <Focus_3 active={currentSlide === 2} />
         </div>
-        <div className="w-screen h-screen">
+        <div className="w-screen">
           <Planner_4 active = {currentSlide === 3} />
         </div>
       </div>
+{/* 
+         <div className="w-screen">
+          <Planner_4 active = {currentSlide === 3} />
+        </div> */}
 
       {/* Slide indicators */}
       <SlideIndicator currentSlide={currentSlide} TOTAL_SLIDES = {TOTAL_SLIDES} />

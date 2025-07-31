@@ -1,0 +1,75 @@
+<ul className="divide-y max-w-full divide-orange-100">
+            {schedule.map((item, idx) => (
+              <li
+                key={idx}
+                className="py-4 max-w-full grid sm:grid-cols-1 md:grid-cols-12  items-center gap-2 group"
+              >
+                {/* Time */}
+                <div className="md:col-span-4 sm:col-span-1 items-center grid grid-cols-12 whitespace-nowrap pr-4 min-w-[180px] ">
+                  <input
+                    type="checkbox"
+                    checked={item.done}
+                    onChange={() => handleCheck(idx)}
+                    className={`appearance-none h-5 w-5 border-2 rounded-sm mr-2
+                                bg-white border-orange-500 transition-all relative
+                                checked:bg-orange-500 checked:border-orange-500
+                                focus:outline-none focus:ring-1 focus:ring-orange-300
+                                after:content-[''] checked:after:content-['✔']
+                                checked:after:text-white checked:after:text-sm
+                                checked:after:absolute checked:after:top-0.5
+                                checked:after:left-[3px] checked:after:font-bold
+                                checked:after:leading-none col-span-2`}
+                    style={{ fontSize: '12px' }}
+                  />
+                  <span className="font-mono cols-span-10 text-orange-500 text-base md:text-lg mr-3">{item.time}</span>
+                </div>
+
+
+                {/* Task/Input */}
+                <div className="md:col-span-5 sm:col-span-1  flex items-center min-w-0">
+                  {editIdx === idx ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={e => setEditValue(e.target.value)}
+                      className="px-2 py-1 h-8 leading-6 border border-orange-300 text-base rounded bg-orange-50 text-orange-900 font-light w-full truncate"
+                      style={{ minWidth: 0 }}
+                    />
+                  ) : (
+                    <span
+                      className={`px-2 py-1 h-8 leading-6 text-orange-900 text-base md:text-lg font-light transition-all truncate w-full block ${item.done ? "line-through opacity-60" : ""}`}
+                      title={item.task}
+                      style={{ minWidth: 0, display: "block" }}
+                    >
+                      {item.task}
+                    </span>
+                  )}
+
+                </div>
+                {/* Buttons */}
+                <div className="md:col-span-3  sm:col-span-1 flex gap-2 justify-end">
+                  {editIdx === idx ? (
+                    <button
+                      onClick={() => handleEditSave(idx)}
+                      className="px-3 py-1 rounded bg-orange-400 text-white text-xs font-semibold shadow border border-orange-500 hover:bg-orange-500 transition"
+                    >
+                      Save
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleEdit(idx)}
+                      className="px-3 py-1 rounded bg-[#FFFAF8] text-[#F54A00] text-xs font-semibold shadow border border-orange-500 hover:bg-[#edddd3] transition"
+                    >
+                      Edit
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleDelete(idx)}
+                    className="px-3 py-1 rounded bg-[#F54A00] text-white text-xs font-semibold shadow hover:bg-[#cc4b14] transition"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>

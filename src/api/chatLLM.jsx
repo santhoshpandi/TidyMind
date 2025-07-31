@@ -4,7 +4,7 @@ export async function fetchLLMResponse(userMessage) {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer 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", 
+      "Authorization": "Bearer ", //API will come here 
       "Content-Type": "application/json"
     },
     body: JSON.stringify({

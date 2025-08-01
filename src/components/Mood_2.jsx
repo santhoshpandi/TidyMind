@@ -24,17 +24,17 @@ const Mood_2 = ({ active }) => {
 
   function handleChange(e) {
     setFeeling(e.target.value)
-    console.log(feeling)
+    // console.log(feeling)
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Optional: prevent form submission if inside a form
+      e.preventDefault(); 
       if (feeling === '') {
         enqueueSnackbar('Provide your Feeling',{variant:'info'})
         return
       }
-      setCurrentSlide(prev => prev + 1); // <-- update your slide state
+      setCurrentSlide(prev => prev + 1); 
     }
   };
 

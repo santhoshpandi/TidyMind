@@ -26,18 +26,18 @@ const Focus_3 = ({ active }) => {
 
   function handleChange(e) {
     setFocus(e.target.value)
-    console.log(focus)
+    // console.log(focus)
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Optional: prevent form submission if inside a form
+      e.preventDefault(); 
       if (focus === '') {
         enqueueSnackbar('You should have some focus',{variant:'info'})
         return
       }
       fetchPlan()
-      setCurrentSlide(prev => prev + 1); // <-- update your slide state
+      setCurrentSlide(prev => prev + 1); 
     }
   };
 

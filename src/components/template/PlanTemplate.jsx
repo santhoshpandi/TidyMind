@@ -1,26 +1,18 @@
 import React, { useState, useRef } from "react";
 import { MdRefresh } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
+import { FaFire } from "react-icons/fa6";
 import { toPng } from 'html-to-image';
+import { usePlan } from "../../contexts/PlanContext";
 
 export default function PlanTemplate() {
 
-  const initialSchedule = [
-    { time: "6:00 AM - 7:00 AM", task: "Morning Run + Cold Shower", done: false },
-    { time: "7:00 AM - 8:00 AM", task: "Healthy Breakfast & Mindful Journaling", done: false },
-    { time: "8:00 AM - 10:00 AM", task: "Deep Work: Focus on Priority Tasks", done: false },
-    { time: "10:00 AM - 10:30 AM", task: "Short Walk & Hydration Break", done: false },
-    { time: "10:30 AM - 12:30 PM", task: "Creative Session / Learning", done: false },
-    { time: "12:30 PM - 1:30 PM", task: "Lunch & Relaxation", done: false },
-    { time: "1:30 PM - 3:30 PM", task: "Collaborative Work / Meetings", done: false },
-    { time: "3:30 PM - 4:00 PM", task: "Tea Break & Reflection", done: false },
-    { time: "4:00 PM - 6:00 PM", task: "Wrap Up Tasks & Plan Tomorrow", done: false },
-    { time: "6:00 PM onwards", task: "Family Time / Hobbies / Rest", done: false },
-  ];
+  const { schedule, setSchedule, fetchPlan, initialSchedule } = usePlan()
 
-  const [schedule, setSchedule] = useState(initialSchedule);
+
   const [editIdx, setEditIdx] = useState(null);
   const [editValue, setEditValue] = useState("");
+  const [editTime, setEditTime] = useState("");
   const plannerRef = useRef();
 
   const handleCheck = (idx) => {
@@ -34,16 +26,18 @@ export default function PlanTemplate() {
   const handleEdit = (idx) => {
     setEditIdx(idx);
     setEditValue(schedule[idx].task);
+    setEditTime(schedule[idx].time);
   };
 
   const handleEditSave = (idx) => {
     setSchedule(schedule =>
       schedule.map((item, i) =>
-        i === idx ? { ...item, task: editValue } : item
+        i === idx ? { ...item, task: editValue, time: editTime } : item
       )
     );
     setEditIdx(null);
     setEditValue("");
+    setEditTime("");
   };
 
   const handleDelete = (idx) => {
@@ -51,11 +45,13 @@ export default function PlanTemplate() {
     if (editIdx === idx) {
       setEditIdx(null);
       setEditValue("");
+      setEditTime("");
     }
   };
 
   // Refresh handler
   const handleRefresh = () => {
+    fetchPlan()
     setSchedule(initialSchedule);
     setEditIdx(null);
     setEditValue("");
@@ -84,7 +80,7 @@ export default function PlanTemplate() {
 
 
   return (
-    <div className=" md:w-[80%] w-[95%] flex items-center justify-center md:p-6">
+    <div className=" md:w-[80%] w-[95%] xl:w-[60%] flex items-center justify-center md:p-6">
       <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl border border-orange-200 p-10 w-full">
 
         {/* Planner Content */}
@@ -95,7 +91,12 @@ export default function PlanTemplate() {
             </span>
 
             {/* Top Buttons */}
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-4">
+              {/* <button
+                className="rounded text-orange-700 text-lg transition"
+              >
+                <FaFire />
+              </button> */}
               <button
                 onClick={handleRefresh}
                 className="rounded text-orange-700 text-xl font-extrabold transition"
@@ -104,7 +105,7 @@ export default function PlanTemplate() {
               </button>
               <button
                 onClick={handleDownload}
-                className="px-4 py-2 rounded text-orange-700 text-lg font-semibold hover:text-orange-500 transition"
+                className=" rounded text-orange-700 text-lg font-semibold hover:text-orange-500 transition"
               >
                 <FaDownload />
               </button>
@@ -134,23 +135,32 @@ export default function PlanTemplate() {
                                 checked:after:leading-none col-span-2`}
                     style={{ fontSize: '12px' }}
                   />
-                  <span className="font-mono col-span-10 text-orange-500 text-base md:text-lg mr-3">{item.time}</span>
+                  {editIdx === idx ? (
+                    <input
+                      type="text"
+                      value={editTime}
+                      onChange={e => setEditTime(e.target.value)}
+                      className="font-mono outline-none focus:border-orange-800 transition-colors duration-150 col-span-10 text-orange-500 text-base leading-snug mr-3 px-2 py-1 border border-orange-300 rounded bg-orange-50 w-full"
+                    />
+                  ) : (
+                    <span className="font-mono col-span-10 text-orange-500 text-base leading-snug mr-3">{item.time}</span>
+                  )}
                 </div>
-
 
                 {/* Task/Input */}
                 <div className="md:col-span-5 sm:col-span-1  flex items-center min-w-0">
                   {editIdx === idx ? (
                     <input
                       type="text"
+                      autoFocus
                       value={editValue}
                       onChange={e => setEditValue(e.target.value)}
-                      className="px-2 py-1 h-8 leading-6 border border-orange-300 text-base rounded bg-orange-50 text-orange-900 font-light w-full truncate"
+                      className="px-2 outline-none py-1 h-8 focus:border-orange-800 transition-colors duration-150  border border-orange-300 text-base leading-snug rounded bg-orange-50 text-orange-900 font-light w-full truncate"
                       style={{ minWidth: 0 }}
                     />
                   ) : (
                     <span
-                      className={`px-2 py-1 h-8 leading-6 text-orange-900 text-base md:text-lg font-light transition-all truncate w-full block ${item.done ? "line-through opacity-60" : ""}`}
+                      className={`px-2 py-1 h-8 leading-snug text-orange-900 text-base md:text-lg font-light transition-all truncate w-full block ${item.done ? "line-through opacity-60" : ""}`}
                       title={item.task}
                       style={{ minWidth: 0, display: "block" }}
                     >

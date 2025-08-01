@@ -36,6 +36,7 @@ const Focus_3 = ({ active }) => {
         enqueueSnackbar('You should have some focus',{variant:'info'})
         return
       }
+      
       fetchPlan()
       setCurrentSlide(prev => prev + 1); 
     }

@@ -1,14 +1,13 @@
 import React, { useState, useRef } from "react";
 import { MdRefresh } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
-import { FaFire } from "react-icons/fa6";
+import { FcMindMap } from "react-icons/fc";
 import { toPng } from 'html-to-image';
 import { usePlan } from "../../contexts/PlanContext";
 
 export default function PlanTemplate() {
 
   const { schedule, setSchedule, fetchPlan, initialSchedule } = usePlan()
-
 
   const [editIdx, setEditIdx] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -39,6 +38,13 @@ export default function PlanTemplate() {
     setEditValue("");
     setEditTime("");
   };
+
+  const handleKeyDown = (e,idx) => {
+    if (e.key == 'Enter') {
+      e.preventDefault()
+      handleEditSave(idx)
+    }
+  }
 
   const handleDelete = (idx) => {
     setSchedule(schedule => schedule.filter((_, i) => i !== idx));
@@ -86,17 +92,12 @@ export default function PlanTemplate() {
         {/* Planner Content */}
         <div ref={plannerRef}>
           <h2 className="text-3xl font-semibold text-orange-600 mb-6 text-center tracking-tight flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
-            <span className="text-center md:text-left">
-              🌅 Your Pleasant Day Planner
+            <span className="text-center md:text-left flex items-center">
+              <FcMindMap className="inline text-orange-600 mr-2" /> Your Pleasant Day Planner
             </span>
 
             {/* Top Buttons */}
             <div className="flex justify-center gap-4">
-              {/* <button
-                className="rounded text-orange-700 text-lg transition"
-              >
-                <FaFire />
-              </button> */}
               <button
                 onClick={handleRefresh}
                 className="rounded text-orange-700 text-xl font-extrabold transition"
@@ -121,6 +122,7 @@ export default function PlanTemplate() {
                 {/* Time */}
                 <div className="md:col-span-4 sm:col-span-1 items-center grid grid-cols-12 whitespace-nowrap pr-4 min-w-[180px] ">
                   <input
+                    id={idx+99}
                     type="checkbox"
                     checked={item.done}
                     onChange={() => handleCheck(idx)}
@@ -137,6 +139,7 @@ export default function PlanTemplate() {
                   />
                   {editIdx === idx ? (
                     <input
+                      id={idx+444}
                       type="text"
                       value={editTime}
                       onChange={e => setEditTime(e.target.value)}
@@ -151,6 +154,7 @@ export default function PlanTemplate() {
                 <div className="md:col-span-5 sm:col-span-1  flex items-center min-w-0">
                   {editIdx === idx ? (
                     <input
+                      onKeyDown={(e)=>handleKeyDown(e,idx)}
                       type="text"
                       autoFocus
                       value={editValue}

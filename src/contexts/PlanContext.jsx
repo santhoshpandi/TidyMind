@@ -26,6 +26,7 @@ export function PlanProvider({ children }) {
   const [feeling, setFeeling] = useState('happy')
   const [focus, setFocus] = useState('study')
 
+  const [loading, setLoading] = useState(false)
 
   async function fetchPlan() {
     if (feeling === '' || focus === '') return;
@@ -49,7 +50,7 @@ export function PlanProvider({ children }) {
             - Do not explain anything — just return the JSON array.
             `;
 
-
+    setLoading(true) // For Loading Template
     const res = await fetchGeminiResponse(userMessage)
 
     try {
@@ -60,17 +61,16 @@ export function PlanProvider({ children }) {
         .trim();
       const plan = JSON.parse(cleaned); // if the result is JSON string
       setSchedule(plan); // update context or component state
-      localStorage.setItem('plan', JSON.stringify(plan)); // store for persistence
+      localStorage.setItem('plan', JSON.stringify(plan)); 
+      setLoading(false) // For Loading Template
     } catch (err) {
       console.error("Failed to parse Gemini response:", err);
     }
 
-
   }
 
-
   return (
-    <PlanContext.Provider value={{ initialSchedule, schedule, setSchedule, feeling, setFeeling, focus, setFocus, fetchPlan }}>
+    <PlanContext.Provider value={{ initialSchedule, schedule, setSchedule, feeling, setFeeling, focus, setFocus, loading, setLoading, fetchPlan }}>
       {children}
     </PlanContext.Provider>
   )

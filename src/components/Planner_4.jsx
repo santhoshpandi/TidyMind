@@ -3,10 +3,11 @@ import FloatingShapes from "./animations/FloatingShapes";
 import PlanTemplate from './template/PlanTemplate'
 import DefaultTemplate from './template/DefaultTemplate.jsx'
 import { usePlan } from "../contexts/PlanContext.jsx";
+import LoadingTemplate from "./template/LoadingTemplate.jsx";
 
 const Planner_4 = ({ active }) => {
 
-  const {schedule} = usePlan()
+  const { schedule, loading } = usePlan()
 
   return (
     <div className="w-screen min-h-screen flex flex-col justify-center items-center  relative">
@@ -16,10 +17,12 @@ const Planner_4 = ({ active }) => {
           key="planner-active"
           className="  w-full gap-4 py-4 animate-slideIn transition-opacity duration-1000 relative z-10 opacity-100 flex flex-col items-center"
         >
-          { 
-            (schedule.length === 0) ?
-            <DefaultTemplate /> :
-            <PlanTemplate />
+          {
+            loading ?
+              <LoadingTemplate /> :  
+              (schedule.length === 0) ?
+                <DefaultTemplate /> :
+                <PlanTemplate />
           }
         </div>
       )}

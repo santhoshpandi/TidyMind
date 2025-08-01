@@ -1,3 +1,4 @@
+import { enqueueSnackbar } from "notistack";
 
 export async function fetchGeminiResponse(userMessage) {
   const response = await fetch(
@@ -18,6 +19,7 @@ export async function fetchGeminiResponse(userMessage) {
   );
 
   if (!response.ok) {
+    enqueueSnackbar('Error in API, Try again later...',{variant:'error'})
     const error = await response.json();
     console.error("Gemini error:", error);
     throw new Error(`Gemini API error: ${error.error?.message || response.status}`);

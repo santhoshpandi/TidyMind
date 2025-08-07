@@ -86,7 +86,7 @@ export default function PlanTemplate() {
 
 
   return (
-    <div className=" md:w-[80%] w-[95%] xl:w-[60%] flex items-center justify-center md:p-6">
+    <div className="md:w-[80%] w-[95%] xl:w-[60%] flex items-center justify-center md:p-6">
       <div className="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl border border-orange-200 p-10 w-full">
 
         {/* Planner Content */}

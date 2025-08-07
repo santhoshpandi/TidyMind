@@ -10,7 +10,7 @@ const Planner_4 = ({ active }) => {
   const { schedule, loading } = usePlan()
 
   return (
-    <div className="w-screen min-h-screen flex flex-col justify-center items-center  relative">
+    <div className="w-screen min-h-screen flex flex-col justify-center items-center relative">
       <FloatingShapes />
       {active && (
         <div

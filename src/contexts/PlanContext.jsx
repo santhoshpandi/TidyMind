@@ -23,8 +23,8 @@ export function PlanProvider({ children }) {
   ];
 
   const [schedule, setSchedule] = useState(initialSchedule);
-  const [feeling, setFeeling] = useState('happy')
-  const [focus, setFocus] = useState('study')
+  const [feeling, setFeeling] = useState(localStorage.getItem('feeling') || 'happy')
+  const [focus, setFocus] = useState(localStorage.getItem('focus') || 'study')
 
   const [loading, setLoading] = useState(false)
 
@@ -53,18 +53,21 @@ export function PlanProvider({ children }) {
     setLoading(true) // For Loading Template
     const res = await fetchGeminiResponse(userMessage)
 
-    try {
+    if(res) {
       // console.log(res)
       const cleaned = res
         .replace(/```json/g, "")
         .replace(/```/g, "")
         .trim();
       const plan = JSON.parse(cleaned); // if the result is JSON string
+    
       setSchedule(plan); // update context or component state
+      localStorage.setItem('feeling', feeling); 
+      localStorage.setItem('focus', focus); 
       localStorage.setItem('plan', JSON.stringify(plan)); 
       setLoading(false) // For Loading Template
-    } catch (err) {
-      console.error("Failed to parse Gemini response:", err);
+    } else {
+      console.error("Failed to parse Gemini response:");
     }
 
   }

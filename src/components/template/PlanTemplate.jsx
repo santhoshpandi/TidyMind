@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { MdRefresh } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
 import { FcMindMap } from "react-icons/fc";
+import { RiPlanetFill } from "react-icons/ri";
 import { toPng } from 'html-to-image';
 import { usePlan } from "../../contexts/PlanContext";
 
@@ -93,7 +94,7 @@ export default function PlanTemplate() {
         <div ref={plannerRef}>
           <h2 className="text-3xl font-semibold text-orange-600 mb-6 text-center tracking-tight flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
             <span className="text-center md:text-left flex items-center">
-              <FcMindMap className="inline text-orange-600 mr-2" /> Your Pleasant Day Planner
+              <RiPlanetFill className="inline text-orange-600 md:text-2xl text-[60px] mr-2" /> Your Pleasant Day Planner
             </span>
 
             {/* Top Buttons */}
@@ -146,7 +147,7 @@ export default function PlanTemplate() {
                       className="font-mono outline-none focus:border-orange-800 transition-colors duration-150 col-span-10 text-orange-500 text-base leading-snug mr-3 px-2 py-1 border border-orange-300 rounded bg-orange-50 w-full"
                     />
                   ) : (
-                    <span className="font-mono col-span-10 text-orange-500 text-base leading-snug mr-3">{item.time}</span>
+                    <span className="font-mono col-span-10 text-orange-500 text-base leading-snug mr-3 break-words">{item.time}</span>
                   )}
                 </div>
 
